@@ -1,134 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>People's Tech Community</title>
-  <link rel="stylesheet" href="styles.css"/>
-</head>
-<body>
+// Project: The People's Tech Community (React Native + Firebase)
 
-  <!-- Hero Banner -->
-  <header class="hero-banner">
-    <img src="images/banner.jpg" alt="Banner" />
-    <div class="search-bar">
-      <input type="text" placeholder="Search...">
-      <button>📅</button>
-    </div>
-  </header>
+// --- File: App.js --- import React from 'react'; import { NavigationContainer } from '@react-navigation/native'; import { createNativeStackNavigator } from '@react-navigation/native-stack'; import LoginScreen from './screens/LoginScreen'; import SignupScreen from './screens/SignupScreen'; import HomeScreen from './screens/HomeScreen'; import ProfileScreen from './screens/ProfileScreen'; import TasksScreen from './screens/TasksScreen';
 
-  <!-- Feature Icons -->
-  <section class="features">
-    <div class="feature"><img src="images/gtclub.png" alt=""><p>GT Club</p></div>
-    <div class="feature"><img src="images/snapzone.png" alt=""><p>Snapzone</p></div>
-    <div class="feature"><img src="images/ui.png" alt=""><p>realme UI</p></div>
-    <div class="feature"><img src="images/checkin.png" alt=""><p>Check in</p></div>
-  </section>
+const Stack = createNativeStackNavigator();
 
-  <!-- Posts Section -->
-  <section class="posts">
-    <div class="post">
-      <img src="images/post1.jpg" alt="Post 1">
-      <h3>Silence Redefined: realme Buds Air 7 Pro</h3>
-      <p>1241 Views</p>
-    </div>
-    <div class="post">
-      <img src="images/post2.jpg" alt="Post 2">
-      <h3>realme GT 7 Hands-On: Flagship Experience</h3>
-      <p>2034 Views</p>
-    </div>
-  </section>
+export default function App() { return ( <NavigationContainer> <Stack.Navigator initialRouteName="Login"> <Stack.Screen name="Login" component={LoginScreen} /> <Stack.Screen name="Signup" component={SignupScreen} /> <Stack.Screen name="Home" component={HomeScreen} /> <Stack.Screen name="Profile" component={ProfileScreen} /> <Stack.Screen name="Tasks" component={TasksScreen} /> </Stack.Navigator> </NavigationContainer> ); }
 
-</body>
-</html>
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9f9f9;
-}
+// --- File: screens/TasksScreen.js --- import React, { useState } from 'react'; import { View, Text, TextInput, Button, FlatList } from 'react-native';
 
-.hero-banner {
-  position: relative;
-  text-align: center;
-  background: #fff;
-  padding-bottom: 10px;
-}
+const mockTasks = [ { id: '1', title: 'Create a tech meme', reward: '100 pts + medal' }, { id: '2', title: 'Write a beginner guide to Python', reward: '200 pts + medal' }, ];
 
-.hero-banner img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-}
+export default function TasksScreen({ navigation }) { return ( <View style={{ padding: 20 }}> <Text style={{ fontSize: 24, marginBottom: 20 }}>Community Tasks</Text> <FlatList data={mockTasks} keyExtractor={item => item.id} renderItem={({ item }) => ( <View style={{ marginBottom: 20 }}> <Text style={{ fontSize: 18 }}>{item.title}</Text> <Text style={{ color: 'gray' }}>Reward: {item.reward}</Text> <Button title="Mark as Complete" onPress={() => alert('Submitted for review')} /> </View> )} /> </View> ); }
 
-.search-bar {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  gap: 5px;
-}
+// --- File: screens/HomeScreen.js --- import React from 'react'; import { View, Text, Button } from 'react-native';
 
-.search-bar input {
-  padding: 10px;
-  width: 60%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+const currentUser = { email: 'you@example.com', role: 'superadmin', };
 
-.search-bar button {
-  padding: 10px;
-  border: none;
-  background: #007bff;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-}
+const getBadge = (role) => { switch (role) { case 'team': return '⭐'; case 'admin': return '⭐⭐'; case 'superadmin': return '⭐⭐⭐'; default: return ''; } };
 
-.features {
-  display: flex;
-  justify-content: space-around;
-  background: #fff;
-  padding: 20px 10px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-}
+export default function HomeScreen({ navigation }) { const isAdmin = currentUser.role === 'admin' || currentUser.role === 'superadmin'; const isSuperAdmin = currentUser.role === 'superadmin';
 
-.feature {
-  text-align: center;
-}
+return ( <View style={{ padding: 20 }}> <Text>Welcome to The People's Tech Community!</Text> <Text>{getBadge(currentUser.role)} {currentUser.email}</Text>
 
-.feature img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 5px;
-}
+<Button title="Go to Profile" onPress={() => navigation.navigate('Profile')} />
+<Button title="Go to Tasks" onPress={() => navigation.navigate('Tasks')} />
 
-.posts {
-  padding: 15px;
-}
+{isAdmin && (
+<View style={{ marginTop: 20 }}>
+<Text style={{ fontWeight: 'bold' }}>Admin Panel</Text>
+<Text>- Pin or unpin posts</Text>
+<Text>- Delete posts</Text>
+<Text>- Assign community tasks</Text>
+</View>
+)}
 
-.post {
-  background: white;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+{isSuperAdmin && (
+<View style={{ marginTop: 20 }}>
+<Text style={{ fontWeight: 'bold' }}>Super Admin Controls</Text>
+<Text>- Promote or demote administrators</Text>
+</View>
+)}
+</View>
 
-.post img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+); }
 
-.post h3 {
-  padding: 10px;
-  margin: 0;
-  font-size: 18px;
-}
+// --- File: screens/ProfileScreen.js --- import React from 'react'; import { View, Text, Button } from 'react-native';
 
-.post p {
-  padding: 0 10px 10px;
-  color: gray;
-  font-size: 14px;
-}
+const user = { name: 'Your Name', email: 'you@example.com', role: 'superadmin', bio: 'Super admin of The People's Tech Community', score: 4400, medals: 4, followers: 397, following: 17, likes: 14870, coins: 115306, };
+
+const getBadge = (role) => { switch (role) { case 'team': return '⭐'; case 'admin': return '⭐⭐'; case 'superadmin': return '⭐⭐⭐'; default: return ''; } };
+
+export default function ProfileScreen({ navigation }) { return ( <View style={{ padding: 20 }}> <Text style={{ fontSize: 24 }}>{user.name}</Text> <Text>{getBadge(user.role)} {user.role}</Text> <Text>{user.email}</Text> <Text>{user.bio}</Text> <View style={{ marginTop: 20 }}> <Text>🎖️ Medals: {user.medals}</Text> <Text>📈 Score: {user.score}</Text> <Text>👥 Followers: {user.followers}</Text> <Text>➡️ Following: {user.following}</Text> <Text>❤️ Likes: {user.likes}</Text> <Text>🪙 Coins: {user.coins}</Text> </View> <Button title="Back to Home" onPress={() => navigation.navigate('Home')} /> </View> ); }
+
+
+
