@@ -1,83 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Post</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Community Hub</h2>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="post.html" class="nav-link active">Create Post</a></li>
-                <li><a href="chat.html" class="nav-link">Chat</a></li>
-                <li><a href="login.html" class="nav-link">Login</a></li>
-                <li><a href="admin.html" class="nav-link">Admin</a></li>
-            </ul>
-        </div>
-    </nav>
+<body>  <!-- Top Banner -->  <header class="top-banner">
+    <img src="https://via.placeholder.com/400x150" alt="Banner" class="banner-img" />
+    <div class="search-bar">
+      <input type="text" placeholder="Search" />
+      <button class="calendar-btn">📅</button>
+    </div>
+  </header>  <!-- Icons Section -->  <section class="icon-menu">
+    <div class="icon-item">
+      <img src="https://via.placeholder.com/60" />
+      <p>GT Club</p>
+    </div>
+    <div class="icon-item">
+      <img src="https://via.placeholder.com/60" />
+      <p>Snapzone</p>
+    </div>
+    <div class="icon-item">
+      <img src="https://via.placeholder.com/60" />
+      <p>realme UI</p>
+    </div>
+    <div class="icon-item">
+      <img src="https://via.placeholder.com/60" />
+      <p>Check in</p>
+    </div>
+  </section>  <!-- Posts List -->  <main class="post-list">
+    <div class="post-card">
+      <img src="https://via.placeholder.com/300x150" alt="Post Image">
+      <div class="post-info">
+        <h3>Silence Redefined: realme Buds Air 7 Pro</h3>
+        <p>1241 Views</p>
+      </div>
+    </div><div class="post-card">
+  <img src="https://via.placeholder.com/300x150" alt="Post Image">
+  <div class="post-info">
+    <h3>realme GT 7 Hands-On: Flagship Look</h3>
+    <p>2034 Views</p>
+  </div>
+</div>
 
-    <main class="post-container">
-        <h1>Create a New Post</h1>
-        <button onclick="insertImage()">Insert Image</button>
-        <button onclick="insertPoll()">Insert Poll</button>
-        <textarea id="post-content" rows="10" cols="50"></textarea>
-    </main>
+<div class="post-card">
+  <img src="https://via.placeholder.com/300x150" alt="Post Image">
+  <div class="post-info">
+    <h3>realme GT 7T: 7000mAh + 120W Charging</h3>
+    <p>1753 Views</p>
+  </div>
+</div>
 
-    <script>
-        function insertImage() {
-            const imageInput = document.createElement('input');
-            imageInput.type = 'file';
-            imageInput.accept = 'image/*';
-            imageInput.style.display = 'none';
-            
-            imageInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const imageMarkup = `\n![${file.name}](${e.target.result})\n`;
-                        insertAtCursor(document.getElementById('post-content'), imageMarkup);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            document.body.appendChild(imageInput);
-            imageInput.click();
-            document.body.removeChild(imageInput);
-        }
+<div class="post-card">
+  <img src="https://via.placeholder.com/300x150" alt="Post Image">
+  <div class="post-info">
+    <h3>Weekly Tech Buzz is Here!</h3>
+    <p>286 Views</p>
+  </div>
+</div>
 
-        function insertPoll() {
-            const pollQuestion = prompt('Enter your poll question:');
-            if (!pollQuestion) return;
+  </main>  <!-- Floating Action Button --><a href="post.html" class="fab">＋</a>
 
-            const options = [];
-            for (let i = 1; i <= 4; i++) {
-                const option = prompt(`Enter option ${i} (leave empty to stop):`);
-                if (!option) break;
-                options.push(option);
-            }
-
-            if (options.length < 2) {
-                alert('Poll needs at least 2 options');
-                return;
-            }
-
-            const pollMarkup = `\n\n**Poll: ${pollQuestion}**\n${options.map((opt, idx) => `${idx + 1}. ${opt}`).join('\n')}\n\n`;
-            insertAtCursor(document.getElementById('post-content'), pollMarkup);
-        }
-
-        function insertAtCursor(myField, myValue) {
-            const start = myField.selectionStart;
-            const end = myField.selectionEnd;
-            myField.value = myField.value.substring(0, start) + myValue + myField.value.substring(end);
-        }
-    </script>
-</body>
+  <!-- Bottom Navigation -->  <nav class="bottom-nav">
+    <a href="index.html">🏠</a>
+    <a href="#">📷</a>
+    <span style="opacity: 0; pointer-events: none;">x</span>
+    <a href="chat.html">💬</a>
+    <a href="login.html">👤</a>
+  </nav></body>
 </html>
