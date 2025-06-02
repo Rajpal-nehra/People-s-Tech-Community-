@@ -1,5 +1,3 @@
-// Project: The People's Tech Community (React Native + Firebase)
-
 // --- File: App.js --- import React from 'react'; import { NavigationContainer } from '@react-navigation/native'; import { createNativeStackNavigator } from '@react-navigation/native-stack'; import LoginScreen from './screens/LoginScreen'; import SignupScreen from './screens/SignupScreen'; import HomeScreen from './screens/HomeScreen'; import ProfileScreen from './screens/ProfileScreen'; import TasksScreen from './screens/TasksScreen';
 
 const Stack = createNativeStackNavigator();
